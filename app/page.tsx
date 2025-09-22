@@ -14,7 +14,7 @@ export default function Home() {
 
   const backendUrl =
     process.env.BACKEND_UPLOAD_URL ?? 'https://nearme.toews-api.com/locate';
-
+  console.log('====> page.ts backendUrl', backendUrl);
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!file) return;
@@ -28,7 +28,7 @@ export default function Home() {
     fd.append('preferences', prefs);
 
     try {
-      const r = await fetch(backendUrl, { method: 'POST', body: fd });
+      const r = await fetch('/api/upload', { method: 'POST', body: fd });
       const ct = r.headers.get('content-type') ?? '';
       let data: ApiResponse;
 
