@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/api/upload", "destination": "https://nearme.toews-api.com/locate" }
-  ]
-}
-

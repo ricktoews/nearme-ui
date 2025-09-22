@@ -12,9 +12,6 @@ export default function Home() {
   const [resp, setResp] = useState<ApiResponse | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
-  const backendUrl =
-    process.env.BACKEND_UPLOAD_URL ?? 'https://nearme.toews-api.com/locate';
-  console.log('====> page.ts backendUrl', backendUrl);
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!file) return;
