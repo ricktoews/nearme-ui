@@ -42,7 +42,6 @@ export default function Home() {
           <input
             type="file"
             accept="image/*"
-            capture="environment"
             required
             onChange={(e)=> setFile(e.target.files?.[0] || null)}
             className="block w-full rounded-lg border border-white/20 p-3"
