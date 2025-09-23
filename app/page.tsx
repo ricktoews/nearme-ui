@@ -25,6 +25,18 @@ function mapsUrl(placeName: string, overallLocation?: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 }
 
+// 1) Keep parsed JSON as unknown
+let data: unknown;
+
+// 2) Type guard / helper
+function getErrorMessage(d: unknown, r: Response): string {
+  if (typeof d === 'object' && d !== null && 'error' in d) {
+    const maybe = d as { error?: unknown };
+    if (typeof maybe.error === 'string') return maybe.error;
+  }
+  return `HTTP ${r.status} ${r.statusText}`;
+}
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -64,7 +76,11 @@ export default function Home() {
         try { data = JSON.parse(raw); } catch { data = { raw }; }
       }
 
-      if (!r.ok) throw new Error((data as any)?.error ?? `HTTP ${r.status}`);
+      // 3) Use it instead of `(data as any)?.error`
+      if (!r.ok) {
+        throw new Error(getErrorMessage(data, r));
+      }
+
       setResp(data as LocateResponse);
     } catch (e: unknown) {
       setErr(e instanceof Error ? e.message : "Upload failed");
