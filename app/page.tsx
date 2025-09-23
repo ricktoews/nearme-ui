@@ -1,6 +1,30 @@
 'use client';
 import { useEffect, useState } from "react";
 
+const sampleData = {
+    "location": "Grand Place, Brussels",
+    "description": "The Grand Place is the central square of Brussels, surrounded by opulent guildhalls and the Town Hall, characterized by its stunning Gothic architecture.",
+    "places": [
+        {
+            "name": "Public Toilet by Grand Place",
+            "walking_time": "5 minutes",
+            "directions": "Head south on Rue de l'Étuve towards the Square de la Bourse. The public restroom is near the Square."
+        },
+        {
+            "name": "McDonald's",
+            "walking_time": "6 minutes",
+            "directions": "Exit Grand Place and head towards Rue de la Bourse. McDonald's is located on the corner."
+        },
+        {
+            "name": "Café de la Presse",
+            "walking_time": "7 minutes",
+            "directions": "Walk north-east from Grand Place along Rue des Chapeliers. The café includes restroom access."
+        }
+    ]
+};
+
+const samplePicture = 'blob:http://localhost:3000/5ea4fdab-f928-4029-be92-e378aa0089cf';
+
 type Place = {
   name: string;
   approximate_walking_time?: string;
@@ -42,7 +66,7 @@ export default function Home() {
   const [preview, setPreview] = useState<string | null>(null);
   const [prefs, setPrefs] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [resp, setResp] = useState<LocateResponse | null>(null);
+  const [resp, setResp] = useState<LocateResponse | null>(sampleData);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
@@ -173,9 +197,9 @@ export default function Home() {
 // RESPONSE VIEW 
 <section className="grid gap-4">
   {/* Top row: photo + “Found near” side by side */}
-  <div className="grid grid-cols-[128px,1fr] gap-4 items-start">
+  <div className="grid grid-cols-[128px,1fr] gap-2 items-center min-w-0">
     <img
-      src={preview ?? "/placeholder.svg"}
+      src={preview ?? samplePicture}
       alt="Uploaded"
       className="w-32 h-32 rounded-xl object-cover border border-white/10 bg-white/5"
     />
@@ -210,55 +234,54 @@ export default function Home() {
 
         return (
           <li
-            key={i}
-            className="grid grid-cols-[1fr,10rem,10rem] items-start gap-3 rounded-xl border border-white/10
-                       odd:bg-white/5 even:bg-white/10 p-4"
-          >
-            {/* Left: place info */}
-            <div>
-              <div className="text-base font-medium">{p.name}</div>
-              {timeText && (
-                <span className="inline-block mt-1 text-xs px-2 py-1 rounded-full border border-white/15">
-                  {timeText}
-                </span>
-              )}
-              {p.directions && (
-                <p className="text-sm opacity-90 mt-2">{p.directions}</p>
-              )}
-            </div>
+  key={i}
+  className="grid grid-cols-[1fr,4.5rem,4.5rem] items-start gap-3 rounded-xl border border-white/10 odd:bg-white/5 even:bg-white/10 p-2"
+>
+  {/* Left: place info */}
+  <div>
+    <div className="text-base font-medium">{p.name}</div>
+    {timeText && (
+      <span className="inline-block mt-1 text-xs px-2 py-1 rounded-full border border-white/15">
+        {timeText}
+      </span>
+    )}
+    {p.directions && (
+      <p className="text-sm opacity-90 mt-2">{p.directions}</p>
+    )}
+  </div>
 
-            {/* Middle: Open in Maps — fixed width + right aligned */}
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="justify-self-end w-40 text-center rounded-lg px-3 py-2 text-sm font-semibold bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
-              aria-label={`Open ${p.name} in Google Maps`}
-            >
-              Open in Maps
-            </a>
+  {/* Middle: Open in Maps — fixed width + right aligned */}
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="justify-self-end w-16 text-center rounded-lg px-1 py-2 text-xs font-semibold bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
+    aria-label={`Open ${p.name} in Google Maps`}
+  >
+    Map
+  </a>
 
-            {/* Right: Share/Copy — fixed width + right aligned */}
-            <button
-              type="button"
-              onClick={async () => {
-                const txt = `${p.name}\n${p.directions ?? ""}\n${url}`;
-                try {
-                  if (navigator.share) {
-                    await navigator.share({ title: p.name, text: p.directions, url });
-                  } else {
-                    await navigator.clipboard.writeText(txt);
-                    alert("Copied to clipboard");
-                  }
-                } catch {
-                  /* user dismissed; ignore */
-                }
-              }}
-              className="justify-self-end w-40 rounded-lg px-3 py-2 text-sm font-semibold bg-white/10 hover:bg-white/15 text-center whitespace-nowrap"
-            >
-              Share / Copy
-            </button>
-          </li>
+  {/* Right: Share/Copy — fixed width + right aligned */}
+  <button
+    type="button"
+    onClick={async () => {
+      const txt = `${p.name}\n${p.directions ?? ""}\n${url}`;
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: p.name, text: p.directions, url });
+        } else {
+          await navigator.clipboard.writeText(txt);
+          alert("Copied to clipboard");
+        }
+      } catch {
+        /* user dismissed; ignore */
+      }
+    }}
+    className="justify-self-end w-16 rounded-lg px-1 py-2 text-xs font-semibold bg-white/10 hover:bg-white/15 text-center whitespace-nowrap"
+  >
+    Share
+  </button>
+</li>
         );
       })}
     </ul>
@@ -277,7 +300,7 @@ export default function Home() {
         // setPrefs("");
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
-      className="text-sm opacity-80 underline"
+      className="text-sm opacity-80 underline cursor-pointer"
     >
       Try another photo
     </button>

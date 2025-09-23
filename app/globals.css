@@ -24,3 +24,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+main section .grid-cols-\[128px\,1fr\] {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+}
+
+main section ul li.grid {
+  display: grid;
+  grid-template-columns: 1fr 4.5rem 4.5rem;
+}
