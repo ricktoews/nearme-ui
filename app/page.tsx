@@ -187,7 +187,7 @@ export default function Home() {
             disabled={loading || !file}
             className="rounded-xl bg-blue-500 py-3 font-semibold disabled:opacity-60"
           >
-            {loading ? "Uploading…" : "Upload"}
+            {loading ? "Uploading…" : "Find"}
           </button>
 
           {err && <div className="text-red-400 text-sm">Error: {err}</div>}
