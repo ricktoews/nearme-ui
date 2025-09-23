@@ -133,7 +133,6 @@ export default function Home() {
               name="photo"
               type="file"
               accept="image/*"
-              capture="environment"
               required
               onChange={(e) => {
                 const f = e.currentTarget.files?.[0] ?? null;
