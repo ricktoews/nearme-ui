@@ -66,7 +66,7 @@ export default function Home() {
   const [preview, setPreview] = useState<string | null>(null);
   const [prefs, setPrefs] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [resp, setResp] = useState<LocateResponse | null>(sampleData);
+  const [resp, setResp] = useState<LocateResponse | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
