@@ -114,7 +114,7 @@ export default function Home() {
   }
 
   return (
-  <main className="min-h-dvh bg-black text-white p-4 grid gap-0 max-w-md mx-auto">
+  <main className=" bg-black text-white p-4 grid gap-0 max-w-md mx-auto">
     {!resp ? (
       <>
         <header className="flex flex-col">
