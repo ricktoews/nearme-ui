@@ -114,19 +114,21 @@ export default function Home() {
   }
 
   return (
-  <main className="min-h-dvh bg-black text-white p-4 grid gap-4 max-w-md mx-auto">
+  <main className="min-h-dvh bg-black text-white p-4 grid gap-0 max-w-md mx-auto">
     {!resp ? (
       <>
-        <header className="grid gap-1">
-          <h1 className="text-xl font-semibold">NearMe</h1>
+        <header className="grid gap-0">
+          <h1 className="text-xl font-semibold bg-gray-800 p-2 relative">
+            Find Near Me
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-red-500"></span>
+          </h1>
           <p className="text-sm opacity-70">
-            Snap a photo and tell us what you want nearby—coffee, art, restrooms, and more.
+            Snap a photo, or choose one from your device, and tell us what you want nearby—coffee, art museum, restrooms, and more.
           </p>
         </header>
 
         <form onSubmit={onSubmit} className="grid gap-3">
           <label className="grid gap-2">
-            <span className="font-medium">Photo</span>
 
             <input
               id="photo"
@@ -160,7 +162,7 @@ export default function Home() {
             </label>
 
             <div className="text-sm opacity-70">
-              {file ? `${file.name} • ${Math.ceil(file.size / 1024)} KB` : "No file selected"}
+              {file ? `${file.name} • ${Math.ceil(file.size / 1024)} KB` : ""}
             </div>
 
             {preview && (
@@ -178,7 +180,7 @@ export default function Home() {
               value={prefs}
               onChange={(e) => setPrefs(e.currentTarget.value)}
               placeholder="e.g., Public restrooms within a 10–15 minute walk."
-              className="min-h-28 rounded-lg border border-white/20 p-3 bg-transparent"
+              className="min-h-20 rounded-lg border border-white/20 p-3 bg-transparent"
             />
           </label>
 
