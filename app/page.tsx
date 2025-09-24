@@ -117,7 +117,7 @@ export default function Home() {
   <main className="min-h-dvh bg-black text-white p-4 grid gap-0 max-w-md mx-auto">
     {!resp ? (
       <>
-        <header className="grid gap-0">
+        <header className="flex flex-col">
           <h1 className="text-xl font-semibold bg-gray-800 p-2 relative">
             Find Near Me
             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-red-500"></span>
@@ -127,7 +127,7 @@ export default function Home() {
           </p>
         </header>
 
-        <form onSubmit={onSubmit} className="grid gap-3">
+        <form onSubmit={onSubmit} className="grid gap-3 mt-4">
           <label className="grid gap-2">
 
             <input
